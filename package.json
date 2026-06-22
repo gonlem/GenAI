@@ -1,0 +1,17 @@
+{
+    "name": "gen-ai-tools",
+    "version": "1.0.0",
+    "scripts": {
+        "dev": "vite"
+    },
+    "dependencies": {
+        "vue": "latest",
+        "vue-router": "latest",
+        "openai": "latest",
+        "@google/genai": "latest"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-vue": "latest",
+        "vite": "latest"
+    }
+}

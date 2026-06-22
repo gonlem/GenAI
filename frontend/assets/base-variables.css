@@ -1,0 +1,9 @@
+:root {
+    --primary-color-h: 210;
+    --primary-color-s: 40%;
+    --secondary-color-h: 350;
+    --secondary-color-s: 60%;
+    --small-shadow: 2px 2px 4px hsl(0, 0%, 0%, 25%);
+    --medium-shadow: 3px 3px 8px hsl(0, 0%, 0%, 25%);
+    --big-shadow: 6px 6px 16px hsl(0, 0%, 0%, 25%);
+}

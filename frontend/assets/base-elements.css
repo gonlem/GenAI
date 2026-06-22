@@ -1,0 +1,87 @@
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+    font-family: system-ui, sans-serif;
+    font-size: unset;
+    padding: unset;
+    margin: unset;
+    border: unset;
+}
+
+body {
+    min-height: 100vh;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+}
+
+label > span {
+    background-color: hsl(var(--primary-color-h), var(--primary-color-s), 40%);
+    color: white;
+    width: fit-content;
+    padding: 0.2rem 0.5rem 0.25rem;
+    border-radius: 0.5rem 0.5rem 0rem 0rem;
+}
+
+input,
+select,
+textarea {
+    box-shadow: var(--small-shadow);
+    border-radius: 0rem 0.5rem 0.5rem 0.5rem;
+    padding: 0.2rem 0.4rem;
+    min-height: 2rem;
+    outline-color: hsl(var(--primary-color-h), var(--primary-color-s), 60%);
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    min-height: revert;
+    box-shadow: none;
+}
+
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: linear-gradient(to top, hsl(var(--secondary-color-h), var(--secondary-color-s), 40%), hsl(var(--secondary-color-h), var(--secondary-color-s), 60%));
+    color: white;
+    box-shadow: var(--small-shadow);
+    border-radius: 0.25rem;
+    padding: 0.4rem;
+    min-height: 2rem;
+    min-width: 2rem;
+}
+
+button:hover {
+    background: linear-gradient(to top, hsl(var(--secondary-color-h), var(--secondary-color-s), 45%), hsl(var(--secondary-color-h), var(--secondary-color-s), 65%));
+    color: white;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table thead {
+    background-color: hsl(var(--primary-color-h), var(--primary-color-s), 40%);
+    color: white;
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: hsl(var(--primary-color-h), var(--primary-color-s), 90%);
+    color: black;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: hsl(var(--primary-color-h), var(--primary-color-s), 85%);
+    color: black;
+}
+
+table th,
+table td {
+    border: 1px solid hsl(var(--primary-color-h), var(--primary-color-s), 70%);
+    padding: 0.4rem;
+}

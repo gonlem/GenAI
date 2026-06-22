@@ -1,0 +1,6 @@
+.env
+node_modules/
+package-lock.json
+
+# Useful to also ignore environment files in subfolders
+frontend/.env
