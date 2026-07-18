@@ -8,7 +8,7 @@ const openai = new OpenAI({
 
 const ai_request = Vue.ref('');
 const ai_response = Vue.ref('');
-const ai_model = Vue.ref('gpt-5.4-nano');
+const ai_model = Vue.ref('gpt-5.6-luna');
 const ai_reasoning_effort = Vue.ref('low'); // "none" | "minimal" | "low" | "medium" | "high"
 const ai_service_tier = Vue.ref('flex'); // "flex" | "default" | "priority" | "auto"
 const ai_temperature = Vue.ref(1.0);
@@ -51,8 +51,14 @@ async function callApi() {
 function getEstimatedCost(inputTokens, outputTokens) {
     let cost = 0.0;
     switch (ai_model.value) {
-        case 'gpt-5.5':
+        case 'gpt-5.6-sol':
             cost = (5.00 * inputTokens + 30.00 * outputTokens) / 1000000;
+            break;
+        case 'gpt-5.6-terra':
+            cost = (2.50 * inputTokens + 15.00 * outputTokens) / 1000000;
+            break;
+        case 'gpt-5.6-luna':
+            cost = (1.00 * inputTokens + 6.00 * outputTokens) / 1000000;
             break;
         case 'gpt-5.4':
             cost = (2.50 * inputTokens + 15.00 * outputTokens) / 1000000;
@@ -62,6 +68,15 @@ function getEstimatedCost(inputTokens, outputTokens) {
             break;
         case 'gpt-5.4-nano':
             cost = (0.20 * inputTokens + 1.25 * outputTokens) / 1000000;
+            break;
+        case 'gpt-5':
+            cost = (1.25 * inputTokens + 10.00 * outputTokens) / 1000000;
+            break;
+        case 'gpt-5-mini':
+            cost = (0.25 * inputTokens + 2.00 * outputTokens) / 1000000;
+            break;
+        case 'gpt-5-nano':
+            cost = (0.05 * inputTokens + 0.40 * outputTokens) / 1000000;
             break;
         default:
             cost = 0.0;
@@ -83,10 +98,15 @@ function getEstimatedCost(inputTokens, outputTokens) {
             <label>
                 <span>Model</span>
                 <select name="model" v-model="ai_model" required>
-                    <option>gpt-5.5</option>
+                    <option>gpt-5.6-sol</option>
+                    <option>gpt-5.6-terra</option>
+                    <option>gpt-5.6-luna</option>
                     <option>gpt-5.4</option>
                     <option>gpt-5.4-mini</option>
                     <option>gpt-5.4-nano</option>
+                    <option>gpt-5</option>
+                    <option>gpt-5-mini</option>
+                    <option>gpt-5-nano</option>
                 </select>
             </label>
             <label>

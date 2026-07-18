@@ -9,7 +9,7 @@ const geminiai = new GoogleGenAI({
 const ai_request = Vue.ref('');
 const ai_response = Vue.ref('');
 const ai_response_image = Vue.ref('');
-const ai_model = Vue.ref('gemini-3.1-flash-image');
+const ai_model = Vue.ref('gemini-3.1-flash-lite-image');
 const ai_service_tier = Vue.ref('flex'); // "flex" | "standard" | "priority"
 const ai_aspect_ratio = Vue.ref('16:9');
 const ai_image_size = Vue.ref('1K'); // "512" | "1K" | "2K" | "4K"
@@ -53,6 +53,9 @@ function getEstimatedCost(inputTokens, outputTokens) {
         case 'gemini-3.1-flash-image':
             cost = (0.50 * inputTokens + 60 * outputTokens) / 1000000;
             break;
+        case 'gemini-3.1-flash-lite-image':
+            cost = (0.25 * inputTokens + 30 * outputTokens) / 1000000;
+            break;
         default:
             cost = 0.0;
     }
@@ -72,6 +75,7 @@ function getEstimatedCost(inputTokens, outputTokens) {
             <label>
                 <span>Model</span>
                 <select name="model" v-model="ai_model" required>
+                    <option>gemini-3.1-flash-lite-image</option>
                     <option>gemini-3.1-flash-image</option>
                 </select>
             </label>
