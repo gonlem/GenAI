@@ -55,10 +55,10 @@ function getEstimatedCost(inputTokens, outputTokens) {
             cost = (5.00 * inputTokens + 30.00 * outputTokens) / 1000000;
             break;
         case 'gpt-5.6-terra':
-            cost = (2.50 * inputTokens + 15.00 * outputTokens) / 1000000;
+            cost = (2.00 * inputTokens + 12.00 * outputTokens) / 1000000;
             break;
         case 'gpt-5.6-luna':
-            cost = (1.00 * inputTokens + 6.00 * outputTokens) / 1000000;
+            cost = (0.20 * inputTokens + 1.20 * outputTokens) / 1000000;
             break;
         case 'gpt-5.4':
             cost = (2.50 * inputTokens + 15.00 * outputTokens) / 1000000;
