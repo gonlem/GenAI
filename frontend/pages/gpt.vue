@@ -60,24 +60,6 @@ function getEstimatedCost(inputTokens, outputTokens) {
         case 'gpt-5.6-luna':
             cost = (0.20 * inputTokens + 1.20 * outputTokens) / 1000000;
             break;
-        case 'gpt-5.4':
-            cost = (2.50 * inputTokens + 15.00 * outputTokens) / 1000000;
-            break;
-        case 'gpt-5.4-mini':
-            cost = (0.75 * inputTokens + 4.50 * outputTokens) / 1000000;
-            break;
-        case 'gpt-5.4-nano':
-            cost = (0.20 * inputTokens + 1.25 * outputTokens) / 1000000;
-            break;
-        case 'gpt-5':
-            cost = (1.25 * inputTokens + 10.00 * outputTokens) / 1000000;
-            break;
-        case 'gpt-5-mini':
-            cost = (0.25 * inputTokens + 2.00 * outputTokens) / 1000000;
-            break;
-        case 'gpt-5-nano':
-            cost = (0.05 * inputTokens + 0.40 * outputTokens) / 1000000;
-            break;
         default:
             cost = 0.0;
     }
@@ -101,12 +83,6 @@ function getEstimatedCost(inputTokens, outputTokens) {
                     <option>gpt-5.6-sol</option>
                     <option>gpt-5.6-terra</option>
                     <option>gpt-5.6-luna</option>
-                    <option>gpt-5.4</option>
-                    <option>gpt-5.4-mini</option>
-                    <option>gpt-5.4-nano</option>
-                    <option>gpt-5</option>
-                    <option>gpt-5-mini</option>
-                    <option>gpt-5-nano</option>
                 </select>
             </label>
             <label>
@@ -125,7 +101,7 @@ function getEstimatedCost(inputTokens, outputTokens) {
                     <option>auto</option>
                     <option>flex</option>
                     <option>default</option>
-                    <option>priority</option>
+                    <option>fast</option>
                 </select>
             </label>
             <label>
