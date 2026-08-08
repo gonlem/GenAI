@@ -8,12 +8,16 @@ const openai = new OpenAI({
 
 const ai_request = Vue.ref('');
 const ai_response = Vue.ref('');
+const ai_reasoning = Vue.ref('');
 const ai_model = Vue.ref('gpt-5.6-luna');
-const ai_reasoning_effort = Vue.ref('low'); // "none" | "minimal" | "low" | "medium" | "high"
-const ai_service_tier = Vue.ref('flex'); // "flex" | "default" | "priority" | "auto"
+const ai_reasoning_effort = Vue.ref('medium');
+const ai_reasoning_mode = Vue.ref('standard');
+const ai_reasoning_summary = Vue.ref('auto');
+const ai_service_tier = Vue.ref('flex');
+const ai_text_verbosity = Vue.ref('medium');
 const ai_temperature = Vue.ref(1.0);
-const ai_web_search = Vue.ref('no'); // "yes" | "no"
-const ai_store = Vue.ref('yes'); // "yes" | "no"
+const ai_web_search = Vue.ref('no');
+const ai_store = Vue.ref('yes');
 
 async function callApi() {
     try {
@@ -21,9 +25,10 @@ async function callApi() {
         let startTime = Date.now();
         const response = await openai.responses.create({
             model: ai_model.value,
-            reasoning: { effort: ai_reasoning_effort.value },
+            reasoning: { effort: ai_reasoning_effort.value, mode: ai_reasoning_mode.value, summary: ai_reasoning_summary.value },
             input: ai_request.value,
             service_tier: ai_service_tier.value,
+            text: { verbosity: ai_text_verbosity.value },
             store: ai_store.value === 'yes',
             temperature: parseFloat(ai_temperature.value),
             tools: ai_web_search.value === 'yes' ? [{ type: 'web_search' }] : [],
@@ -31,7 +36,9 @@ async function callApi() {
         let endTime = Date.now();
         let responseText = `[Response time: ${(endTime - startTime) / 1000} seconds]\n`;
         responseText += `[Model: ${response.model}]\n`;
-        responseText += `[Reasoning effort: ${response.reasoning.effort}]\n`;
+        responseText += `[Reasoning effort: ${response.reasoning?.effort}]\n`;
+        responseText += `[Reasoning mode: ${response.reasoning?.mode}]\n`;
+        responseText += `[Reasoning summary: ${response.reasoning?.summary}]\n`;
         responseText += `[Temperature: ${response.temperature}]\n`;
         responseText += `[Service tier: ${response.service_tier}]\n`;
         responseText += `[Text verbosity: ${response.text.verbosity}]\n`;
@@ -43,6 +50,7 @@ async function callApi() {
         responseText += `[Estimated cost: €${cost.toFixed(6)}]\n\n`;
         responseText += response.output_text;
         ai_response.value = responseText;
+        ai_reasoning.value = response.output.find((item) => item.type === 'reasoning')?.summary[0]?.text || '';
     } catch (error) {
         ai_response.value = `Error: ${error.message}`;
     }
@@ -75,6 +83,10 @@ function getEstimatedCost(inputTokens, outputTokens) {
                 <span>Request</span>
                 <textarea name="request" v-model="ai_request"></textarea>
             </label>
+            <label>
+                <span>Reasoning</span>
+                <textarea name="reasoning" v-model="ai_reasoning"></textarea>
+            </label>
         </div>
         <div class="flex-column fit-content">
             <label>
@@ -89,10 +101,26 @@ function getEstimatedCost(inputTokens, outputTokens) {
                 <span>Effort</span>
                 <select name="reasoning_effort" v-model="ai_reasoning_effort" required>
                     <option>none</option>
-                    <option>minimal</option>
                     <option>low</option>
                     <option>medium</option>
                     <option>high</option>
+                    <option>xhigh</option>
+                    <option>max</option>
+                </select>
+            </label>
+            <label>
+                <span>Mode</span>
+                <select name="reasoning_mode" v-model="ai_reasoning_mode" required>
+                    <option>standard</option>
+                    <option>pro</option>
+                </select>
+            </label>
+            <label>
+                <span>Summary</span>
+                <select name="reasoning_summary" v-model="ai_reasoning_summary" required>
+                    <option>auto</option>
+                    <option>concise</option>
+                    <option>detailed</option>
                 </select>
             </label>
             <label>
@@ -102,6 +130,14 @@ function getEstimatedCost(inputTokens, outputTokens) {
                     <option>flex</option>
                     <option>default</option>
                     <option>fast</option>
+                </select>
+            </label>
+            <label>
+                <span>Text verbosity</span>
+                <select name="text_verbosity" v-model="ai_text_verbosity" required>
+                    <option>low</option>
+                    <option>medium</option>
+                    <option>high</option>
                 </select>
             </label>
             <label>
@@ -138,7 +174,7 @@ function getEstimatedCost(inputTokens, outputTokens) {
 
 textarea {
     min-width: 100%;
-    min-height: 30rem;
+    min-height: 20rem;
     field-sizing: content;
 }
 </style>
