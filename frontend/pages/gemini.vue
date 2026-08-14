@@ -8,7 +8,7 @@ const geminiai = new GoogleGenAI({
 
 const ai_request = Vue.ref('');
 const ai_response = Vue.ref('');
-const ai_model = Vue.ref('gemini-3.1-flash-lite');
+const ai_model = Vue.ref('gemini-3.5-flash-lite');
 const ai_reasoning_effort = Vue.ref('low');
 const ai_service_tier = Vue.ref('flex');
 const ai_temperature = Vue.ref(1.0);
@@ -53,8 +53,8 @@ async function callApi() {
 function getEstimatedCost(inputTokens, outputTokens) {
     let cost = 0.0;
     switch (ai_model.value) {
-        case 'gemini-3.6-flash':
-            cost = (1.50 * inputTokens + 7.50 * outputTokens) / 1000000;
+        case 'gemini-3.7-flash':
+            cost = (0.75 * inputTokens + 3.75 * outputTokens) / 1000000;
             break;
         case 'gemini-3.5-flash-lite':
             cost = (0.30 * inputTokens + 2.50 * outputTokens) / 1000000;
@@ -79,7 +79,7 @@ function getEstimatedCost(inputTokens, outputTokens) {
             <label>
                 <span>Model</span>
                 <select name="model" v-model="ai_model" required>
-                    <option>gemini-3.6-flash</option>
+                    <option>gemini-3.7-flash</option>
                     <option>gemini-3.5-flash-lite</option>
                 </select>
             </label>
