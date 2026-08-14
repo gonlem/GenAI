@@ -15,7 +15,6 @@ const ai_reasoning_mode = Vue.ref('standard');
 const ai_reasoning_summary = Vue.ref('auto');
 const ai_service_tier = Vue.ref('flex');
 const ai_text_verbosity = Vue.ref('medium');
-const ai_temperature = Vue.ref(1.0);
 const ai_web_search = Vue.ref('no');
 const ai_store = Vue.ref('yes');
 
@@ -30,7 +29,6 @@ async function callApi() {
             service_tier: ai_service_tier.value,
             text: { verbosity: ai_text_verbosity.value },
             store: ai_store.value === 'yes',
-            temperature: parseFloat(ai_temperature.value),
             tools: ai_web_search.value === 'yes' ? [{ type: 'web_search' }] : [],
         });
         let endTime = Date.now();
@@ -39,7 +37,6 @@ async function callApi() {
         responseText += `[Reasoning effort: ${response.reasoning?.effort}]\n`;
         responseText += `[Reasoning mode: ${response.reasoning?.mode}]\n`;
         responseText += `[Reasoning summary: ${response.reasoning?.summary}]\n`;
-        responseText += `[Temperature: ${response.temperature}]\n`;
         responseText += `[Service tier: ${response.service_tier}]\n`;
         responseText += `[Text verbosity: ${response.text.verbosity}]\n`;
         responseText += `[Input tokens: ${response.usage.input_tokens}]\n`;
@@ -50,7 +47,8 @@ async function callApi() {
         responseText += `[Estimated cost: €${cost.toFixed(6)}]\n\n`;
         responseText += response.output_text;
         ai_response.value = responseText;
-        ai_reasoning.value = response.output.find((item) => item.type === 'reasoning')?.summary[0]?.text || '';
+        let reasoningItems = response.output.filter(item => item.type === 'reasoning').map(item => item.summary).flat() || [];
+        ai_reasoning.value = reasoningItems.map(item => item.text).join('\n\n');
     } catch (error) {
         ai_response.value = `Error: ${error.message}`;
     }
@@ -139,10 +137,6 @@ function getEstimatedCost(inputTokens, outputTokens) {
                     <option>medium</option>
                     <option>high</option>
                 </select>
-            </label>
-            <label>
-                <span>Temperature</span>
-                <input name="temperature" type="number" min="0" max="2" step="0.1" v-model="ai_temperature" />
             </label>
             <label>
                 <span>Web Search</span>
