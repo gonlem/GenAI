@@ -3,13 +3,15 @@ import * as Vue from 'vue';
 import OpenAI from "openai";
 
 const openai = new OpenAI({
-    apiKey: import.meta.env.VITE_OPENAI_API_KEY, dangerouslyAllowBrowser: true
+    apiKey: import.meta.env.VITE_MUSE_API_KEY, 
+    baseURL: 'https://api.meta.ai/v1', 
+    dangerouslyAllowBrowser: true
 });
 
 const ai_request = Vue.ref('');
 const ai_response = Vue.ref('');
 const ai_reasoning = Vue.ref('');
-const ai_model = Vue.ref('gpt-5.6-luna');
+const ai_model = Vue.ref('muse-spark-1.3-contributor');
 const ai_reasoning_effort = Vue.ref('medium');
 const ai_reasoning_mode = Vue.ref('standard');
 const ai_reasoning_summary = Vue.ref('auto');
@@ -57,14 +59,11 @@ async function callApi() {
 function getEstimatedCost(inputTokens, outputTokens) {
     let cost = 0.0;
     switch (ai_model.value) {
-        case 'gpt-5.6-sol':
-            cost = (4.00 * inputTokens + 20.00 * outputTokens) / 1000000;
+        case 'muse-spark-1.3':
+            cost = (1.25 * inputTokens + 4.25 * outputTokens) / 1000000;
             break;
-        case 'gpt-5.6-terra':
-            cost = (2.00 * inputTokens + 12.00 * outputTokens) / 1000000;
-            break;
-        case 'gpt-5.6-luna':
-            cost = (0.20 * inputTokens + 1.20 * outputTokens) / 1000000;
+        case 'muse-spark-1.3-contributor':
+            cost = (0.10 * inputTokens + 0.20 * outputTokens) / 1000000;
             break;
         default:
             cost = 0.0;
@@ -90,9 +89,8 @@ function getEstimatedCost(inputTokens, outputTokens) {
             <label>
                 <span>Model</span>
                 <select name="model" v-model="ai_model" required>
-                    <option>gpt-5.6-sol</option>
-                    <option>gpt-5.6-terra</option>
-                    <option>gpt-5.6-luna</option>
+                    <option>muse-spark-1.3</option>
+                    <option>muse-spark-1.3-contributor</option>
                 </select>
             </label>
             <label>

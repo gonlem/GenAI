@@ -13,6 +13,7 @@ import * as Vue from 'vue';
             <router-link to="/gpt-image">GPT Image API</router-link>
             <router-link to="/gemini">Gemini API</router-link>
             <router-link to="/gemini-image">Gemini Image API</router-link>
+            <router-link to="/muse">Muse API</router-link>
         </nav>
     </header>
     <main>
