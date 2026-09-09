@@ -57,6 +57,9 @@ async function callApi() {
 function getEstimatedCost(inputTokens, outputTokens) {
     let cost = 0.0;
     switch (ai_model.value) {
+        case 'gpt-6-astra':
+            cost = (10.00 * inputTokens + 50.00 * outputTokens) / 1000000;
+            break;
         case 'gpt-5.6-sol':
             cost = (4.00 * inputTokens + 20.00 * outputTokens) / 1000000;
             break;
@@ -90,6 +93,7 @@ function getEstimatedCost(inputTokens, outputTokens) {
             <label>
                 <span>Model</span>
                 <select name="model" v-model="ai_model" required>
+                    <option>gpt-6-astra</option>
                     <option>gpt-5.6-sol</option>
                     <option>gpt-5.6-terra</option>
                     <option>gpt-5.6-luna</option>

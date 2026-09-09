@@ -9,7 +9,7 @@ const openai = new OpenAI({
 const ai_request = Vue.ref('');
 const ai_response = Vue.ref('');
 const ai_response_image = Vue.ref('');
-const ai_model = Vue.ref('gpt-image-2');
+const ai_model = Vue.ref('gpt-image-2.5-sunburst');
 const ai_moderation = Vue.ref('low'); // "auto" | "low"
 const ai_image_size = Vue.ref('1536x512'); // "auto" | "1024x1024" | "1536x1024" | "1024x1536"
 const ai_image_output_format = Vue.ref('png'); // "png" | "jpeg" | "webp"
@@ -51,7 +51,8 @@ async function callApi() {
 function getEstimatedCost(inputTokens, outputTokens) {
     let cost = 0.0;
     switch (ai_model.value) {
-        case 'gpt-image-2':
+        case 'gpt-image-2.5-sunburst':
+        case 'gpt-image-2.5-flare':
             cost = (5 * inputTokens + 30 * outputTokens) / 1000000;
             break;
         default:
@@ -73,7 +74,8 @@ function getEstimatedCost(inputTokens, outputTokens) {
             <label>
                 <span>Model</span>
                 <select name="model" v-model="ai_model" required>
-                    <option>gpt-image-2</option>
+                    <option>gpt-image-2.5-sunburst</option>
+                    <option>gpt-image-2.5-flare</option>
                 </select>
             </label>
             <label>
@@ -101,6 +103,8 @@ function getEstimatedCost(inputTokens, outputTokens) {
                     <option>low</option>
                     <option>medium</option>
                     <option>high</option>
+                    <option>xhigh</option>
+                    <option>max</option>
                 </select>
             </label>
             <button @click="callApi()">Call API</button>
