@@ -9,7 +9,7 @@ const openai = new OpenAI({
 const ai_request = Vue.ref('');
 const ai_response = Vue.ref('');
 const ai_reasoning = Vue.ref('');
-const ai_model = Vue.ref('gpt-5.6-luna');
+const ai_model = Vue.ref('gpt-6-luna');
 const ai_reasoning_effort = Vue.ref('medium');
 const ai_reasoning_mode = Vue.ref('standard');
 const ai_reasoning_summary = Vue.ref('auto');
@@ -60,14 +60,11 @@ function getEstimatedCost(inputTokens, outputTokens) {
         case 'gpt-6-astra':
             cost = (10.00 * inputTokens + 50.00 * outputTokens) / 1000000;
             break;
-        case 'gpt-5.6-sol':
-            cost = (4.00 * inputTokens + 20.00 * outputTokens) / 1000000;
+        case 'gpt-6-sol':
+            cost = (2.00 * inputTokens + 10.00 * outputTokens) / 1000000;
             break;
-        case 'gpt-5.6-terra':
-            cost = (2.00 * inputTokens + 12.00 * outputTokens) / 1000000;
-            break;
-        case 'gpt-5.6-luna':
-            cost = (0.20 * inputTokens + 1.20 * outputTokens) / 1000000;
+        case 'gpt-6-luna':
+            cost = (0.10 * inputTokens + 0.50 * outputTokens) / 1000000;
             break;
         default:
             cost = 0.0;
@@ -94,9 +91,8 @@ function getEstimatedCost(inputTokens, outputTokens) {
                 <span>Model</span>
                 <select name="model" v-model="ai_model" required>
                     <option>gpt-6-astra</option>
-                    <option>gpt-5.6-sol</option>
-                    <option>gpt-5.6-terra</option>
-                    <option>gpt-5.6-luna</option>
+                    <option>gpt-6-sol</option>
+                    <option>gpt-6-luna</option>
                 </select>
             </label>
             <label>
