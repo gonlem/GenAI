@@ -60,8 +60,11 @@ function getEstimatedCost(inputTokens, outputTokens) {
         case 'gpt-6-astra':
             cost = (10.00 * inputTokens + 50.00 * outputTokens) / 1000000;
             break;
-        case 'gpt-6-sol':
+        case 'gpt-6.1-sol':
             cost = (2.00 * inputTokens + 10.00 * outputTokens) / 1000000;
+            break;
+        case 'gpt-6.1-terra':
+            cost = (1.00 * inputTokens + 5.00 * outputTokens) / 1000000;
             break;
         case 'gpt-6-luna':
             cost = (0.10 * inputTokens + 0.50 * outputTokens) / 1000000;
@@ -91,7 +94,8 @@ function getEstimatedCost(inputTokens, outputTokens) {
                 <span>Model</span>
                 <select name="model" v-model="ai_model" required>
                     <option>gpt-6-astra</option>
-                    <option>gpt-6-sol</option>
+                    <option>gpt-6.1-sol</option>
+                    <option>gpt-6.1-terra</option>
                     <option>gpt-6-luna</option>
                 </select>
             </label>

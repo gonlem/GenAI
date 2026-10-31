@@ -53,6 +53,9 @@ async function callApi() {
 function getEstimatedCost(inputTokens, outputTokens) {
     let cost = 0.0;
     switch (ai_model.value) {
+        case 'gemini-4-argon':
+            cost = (2 * inputTokens + 10 * outputTokens) / 1000000;
+            break;
         case 'gemini-3.8-flash':
             cost = (0.75 * inputTokens + 3.75 * outputTokens) / 1000000;
             break;
@@ -79,6 +82,7 @@ function getEstimatedCost(inputTokens, outputTokens) {
             <label>
                 <span>Model</span>
                 <select name="model" v-model="ai_model" required>
+                    <option>gemini-4-argon</option>
                     <option>gemini-3.8-flash</option>
                     <option>gemini-3.5-flash-lite</option>
                 </select>
